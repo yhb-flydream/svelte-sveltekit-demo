@@ -1,30 +1,24 @@
 <script>
-	export let data;
+  export let data;
 </script>
 
-<div class="layout">
-	<main>
-		<slot />
-	</main>
+<div class="container">
+  <!-- <div class="header"></div> -->
+  <div class="body flex items-start">
+    <main class="flex-1">
+      <slot />
+    </main>
 
-	<aside>
-		<h2>More posts</h2>
-		<ul>
-			{#each data.navs as { path, title }}
-				<li>
-					<a href="/blog/{path}">{title}</a>
-				</li>
-			{/each}
-		</ul>
-	</aside>
+    <aside>
+      <h2 class="mt-3">More posts</h2>
+      <ul class="m-0">
+        {#each data.navs as { path, title }}
+          <li>
+						<a class="btn btn-link" href="/blog/{path}" data-sveltekit-reload>{title}</a>
+          </li>
+        {/each}
+      </ul>
+    </aside>
+  </div>
+  <!-- <div class="footer"></div> -->
 </div>
-
-<style>
-	@media (min-width: 640px) {
-		.layout {
-			display: grid;
-			gap: 2em;
-			grid-template-columns: 1fr 16em;
-		}
-	}
-</style>

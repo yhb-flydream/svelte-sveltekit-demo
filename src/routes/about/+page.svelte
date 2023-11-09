@@ -10,6 +10,13 @@
   <meta name="description" content={data.title} />
 </svelte:head>
 
-<h1>{data.title}</h1>
-<p>{message}</p>
-<p>{data.layoutMessage}</p>
+<div class="container">
+  <div class="header">
+    <h1>{data.title}</h1>
+  </div>
+  <div class="body flex flex-col items-center">
+    <p>{message}</p>
+    <p>{data.layoutMessage}</p>
+  </div>
+  <!-- <div class="footer"></div> -->
+</div>

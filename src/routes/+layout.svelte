@@ -2,6 +2,8 @@
 	import { page, navigating, updated } from '$app/stores';
 	import Nav from '$lib/components/Nav/+page.svelte'
 
+	import '../app.css';
+
 	/** @type {import('./$types').LayoutData}*/
 	export let data;
 </script>
@@ -20,7 +22,9 @@
 
 <!-- <svelte:component this={data.Nav} /> -->
 
-<slot />
+<div class="p-5">
+	<slot />
+</div>
 
 {#if $updated}
 	<p class="toast">

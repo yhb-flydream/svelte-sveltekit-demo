@@ -1,6 +1,7 @@
 /* https://kit.svelte.dev/docs/configuration */
 import adapter from '@sveltejs/adapter-auto';
 import { resolve } from 'path';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -23,7 +24,8 @@ const config = {
 			// if undefined, no polling will occur
 			pollInterval: 5000
 		}
-	}
+	},
+	preprocess: vitePreprocess()
 };
 
 export default config;

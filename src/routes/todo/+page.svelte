@@ -65,7 +65,7 @@
       }
     });
     console.log('data.todos :>> ', data.todos);
-    data.todos.find(it => it.id === todo.id).done = done;
+    data.todos.find((it) => it.id === todo.id).done = done;
     data.todos = [...data.todos];
   }
 
@@ -84,11 +84,11 @@
   <meta name="description" content={data.title} />
 </svelte:head>
 
-<div class="centered">
-  <h1>todos</h1>
+<div class="container flex flex-col max-w-none">
+  <h1 class="text-left">todos</h1>
 
   <input
-    class="new-todo"
+    class="input input-bordered input-primary max-w-2xl m-auto w-full mb-5"
     type="text"
     autocomplete="off"
     data-sveltekit-keepfocus
@@ -96,88 +96,90 @@
     placeholder="what needs to be done?"
   />
 
-  <div class="left">
-    <h2>todo</h2>
-    <ul class="todos">
-      {#each data.todos.filter((t) => !t.done) as todo (todo.id)}
-        <li in:receive={{ key: todo.id }} out:send={{ key: todo.id }} animate:flip>
-          <label>
-            <input type="checkbox" checked={todo.done} on:change={(e) => changeTodo(e, todo)} />
-            <span>{todo.description}</span>
-            <button aria-label="Mark as complete" on:click={(e) => deleteTodo(todo)} />
-          </label>
-        </li>
-      {/each}
-    </ul>
-  </div>
-
-  <div class="right">
-    <h2>done</h2>
-    <ul class="todos">
-      {#each data.todos.filter((t) => t.done) as todo (todo.id)}
-        <li in:receive={{ key: todo.id }} out:send={{ key: todo.id }} animate:flip>
-          <label>
-            <input type="checkbox" checked={todo.done} on:change={(e) => changeTodo(e, todo)} />
-            <span>{todo.description}</span>
-            <button aria-label="Mark as complete" on:click={(e) => deleteTodo(todo)} />
-          </label>
-        </li>
-      {/each}
-    </ul>
+  <div class="todos flex justify-between items-start gap-10">
+    <div class="card shadow-md flex-1">
+      <div class="card-body">
+        <p class="card-title mt-0">todo</p>
+        <div class="todo-list flex flex-col">
+          {#each data.todos.filter((t) => !t.done) as todo (todo.id)}
+            <label
+              class="label cursor-pointer flex"
+              in:receive={{ key: todo.id }}
+              out:send={{ key: todo.id }}
+              animate:flip
+            >
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary mr-2"
+                checked={todo.done}
+                on:change={(e) => changeTodo(e, todo)}
+              />
+              <span class="label-text text-lg flex-1">{todo.description}</span>
+              <button
+                class="btn btn-circle btn-xs"
+                aria-label="Mark as complete"
+                on:click={(e) => deleteTodo(todo)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  /></svg
+                >
+              </button>
+            </label>
+          {/each}
+        </div>
+      </div>
+    </div>
+    <div class="card shadow-md flex-1">
+      <div class="card-body">
+        <p class="card-title mt-0">done</p>
+        <div class="todo-list flex flex-col">
+          {#each data.todos.filter((t) => t.done) as todo (todo.id)}
+            <label
+              class="label cursor-pointer flex"
+              in:receive={{ key: todo.id }}
+              out:send={{ key: todo.id }}
+              animate:flip
+            >
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary mr-2"
+                checked={todo.done}
+                on:change={(e) => changeTodo(e, todo)}
+              />
+              <span class="label-text text-lg flex-1">{todo.description}</span>
+              <button
+                class="btn btn-circle btn-xs"
+                aria-label="Mark as complete"
+                on:click={(e) => deleteTodo(todo)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  /></svg
+                >
+              </button>
+            </label>
+          {/each}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<style>
-  .centered {
-    max-width: 50em;
-    margin: 0 auto;
-  }
-
-  label {
-    display: flex;
-    width: 100%;
-  }
-
-  input[type='text'] {
-    flex: 1;
-  }
-
-  span {
-    flex: 1;
-  }
-
-  button {
-    border: none;
-    background: url(@/static/svg/remove.svg) no-repeat 50% 50%;
-    background-size: 1rem 1rem;
-    cursor: pointer;
-    height: 100%;
-    aspect-ratio: 1;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-  }
-
-  button:hover {
-    opacity: 1;
-  }
-
-  .new-todo {
-    font-size: 1.4em;
-    width: 100%;
-    margin: 1em 0;
-  }
-
-  .left,
-  .right {
-    float: left;
-    width: 50%;
-    padding: 0 1em 0 0;
-    box-sizing: border-box;
-  }
-
-  h2 {
-    font-size: 2em;
-    font-weight: 200;
-    user-select: none;
-  }
-</style>
